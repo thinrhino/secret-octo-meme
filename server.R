@@ -21,13 +21,26 @@ shinyServer(function(input, output) {
 
     output$plot <- renderPlot({
         a <- input$x
+        data <- dataset()
 
-        p <- ggplot(dataset(),
-                    aes(x = eval(parse(text=a)),
-                        y = value,
-                        group = variable))
+        if (a == 'State'){
+            p <- ggplot(data,
+                        aes(x = State,
+                            y = value,
+                            group = variable)
+                        ) + geom_line(aes(color = variable))
+        } else {
+            p <- ggplot(data,
+                        aes(x = City,
+                            y = value,
+                            group = variable)
+                        ) + geom_line(aes(color = variable))
+        }
 
-        p <- p + geom_line(aes(color = variable))
+        p <- p + xlab(a) + ylab('RSPM') + ggtitle(paste('RSPM vs', a, sep = ' ')) +
+            theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+            geom_point(aes(color = variable)) +
+            scale_colour_discrete(name = "Year")
         print(p)
     })
 })

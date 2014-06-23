@@ -1,5 +1,6 @@
 library(shiny)
 library(ggplot2)
+library(markdown)
 source("helper.R")
 
 
@@ -18,7 +19,7 @@ shinyUI(fluidPage(
                            choices = c('State', 'City')
                            )
                ),
-        column(4, offset = 1,
+        column(7,
                includeMarkdown("instructions.md"))
     )
 )
